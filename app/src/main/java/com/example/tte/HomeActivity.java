@@ -21,6 +21,8 @@ public class HomeActivity extends AppCompatActivity {
     private Button check_out;
     private Button book;
     private FirebaseAuth firebaseAuth;
+    private String phone=getIntent().getExtras().getString("phone");
+
 
 
     @Override
@@ -44,16 +46,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(
                 requestCode,resultCode,data
         );
-        if(resultCode==RESULT_OK)
-        {
 
-        }
 
         if(intentResult.getContents()!=null)
         {
@@ -61,11 +61,14 @@ public class HomeActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     HomeActivity.this
             );
-            builder.setMessage(intentResult.getContents());
+            builder.setMessage("Click OK for the details");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                    Intent intent = new Intent(HomeActivity.this,TicketDetailsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("phone","+91"+phone);
+                    startActivity(intent);
                 }
             });
             builder.show();
@@ -74,5 +77,11 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 }
+
+
+    
+
+
+
 
 

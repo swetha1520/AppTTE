@@ -28,6 +28,8 @@ public class VerificationActivity extends AppCompatActivity {
     private Button Login;
     private FirebaseAuth firebaseAuth;
     private String verificationId;
+    String phone = getIntent().getStringExtra("phone");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,7 +39,7 @@ public class VerificationActivity extends AppCompatActivity {
         OTP = findViewById(R.id.otp);
         Login = findViewById(R.id.login);
         TextView numberText = findViewById(R.id.numberText);
-        String phone = getIntent().getStringExtra("phone");
+
         String s;
         s = "Entered Phone number is: "+phone.substring(3);
         numberText.setText(s);
@@ -63,6 +65,7 @@ public class VerificationActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
                                 Intent intent = new Intent(VerificationActivity.this,HomeActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("phone","+91"+phone);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -92,6 +95,7 @@ public class VerificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String code = OTP.getText().toString().trim();
+
                 PhoneAuthCredential credential;
                 credential = PhoneAuthProvider.getCredential(verificationId, code);
                 firebaseAuth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -99,6 +103,7 @@ public class VerificationActivity extends AppCompatActivity {
                     public void onSuccess(AuthResult authResult) {
                         Intent intent = new Intent(VerificationActivity.this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("phone","+91"+phone);
                         startActivity(intent);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
