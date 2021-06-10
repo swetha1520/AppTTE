@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,9 +17,9 @@ import com.google.zxing.integration.android.IntentResult;
 
 
 public class HomeActivity extends AppCompatActivity {
-    private Button check_in;
-    private Button check_out;
-    private Button book;
+    private ImageButton check_in;
+    private ImageButton check_out;
+    private ImageButton book;
     private FirebaseAuth firebaseAuth;
 
 
@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         firebaseAuth = FirebaseAuth.getInstance();
         check_in = findViewById(R.id.check_in);
+        check_out = findViewById(R.id.check_out);
+        book = findViewById(R.id.book_ticket);
         check_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,25 +47,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
     }
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//
-//        IntentResult res = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if (res != null) {
-//            if (res.getContents() == null) {
-//                Toast.makeText(this, "OOPS... You did not scan anything", Toast.LENGTH_LONG).show();
-//
-//            } else {
-//
-//                Intent intent = new Intent(HomeActivity.this, TicketDetailsActivity.class);
-//                intent.putExtra("phone", "+91" + phone);
-//                startActivity(intent);
-//                // Toast.makeText(this,res.getContents(),Toast.LENGTH_LONG).show();
-//
-//            }
-//        }
-//        super.onActivityResult(requestCode, resultCode, data);
+
 
         @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -83,10 +69,9 @@ public class HomeActivity extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-////                    dialogInterface.dismiss();
                     Intent intent = new Intent(HomeActivity.this,TicketDetailsActivity.class);
-                    final String scanresult = intentResult.getContents();
-                    intent.putExtra("SCAN RESULT",scanresult);
+                    final String result = intentResult.getContents();
+                    intent.putExtra("SCAN RESULT",result);
                     startActivity(intent);
                 }
             })
