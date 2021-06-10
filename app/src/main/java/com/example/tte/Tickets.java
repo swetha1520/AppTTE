@@ -13,7 +13,7 @@ public class Tickets {
     private String date;
     private List<String> seats;
     private List<String> gender;
-    private String phonenumber;
+
 
     public List<String> getGender() {
         return gender;
@@ -89,11 +89,5 @@ public class Tickets {
     public Tickets() {
     }
 
-//    public String getPhonenumber() {
-//        return phonenumber;
-//    }
-//
-//    public void setPhonenumber(String phonenumber) {
-//        this.phonenumber = phonenumber;
-//    }
+
 }

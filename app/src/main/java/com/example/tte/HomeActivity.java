@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button check_out;
     private Button book;
     private FirebaseAuth firebaseAuth;
-    private String phone=getIntent().getExtras().getString("phone");
+
 
 
 
@@ -46,8 +46,26 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//
+//        IntentResult res = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//        if (res != null) {
+//            if (res.getContents() == null) {
+//                Toast.makeText(this, "OOPS... You did not scan anything", Toast.LENGTH_LONG).show();
+//
+//            } else {
+//
+//                Intent intent = new Intent(HomeActivity.this, TicketDetailsActivity.class);
+//                intent.putExtra("phone", "+91" + phone);
+//                startActivity(intent);
+//                // Toast.makeText(this,res.getContents(),Toast.LENGTH_LONG).show();
+//
+//            }
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
+        @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(
@@ -61,17 +79,23 @@ public class HomeActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     HomeActivity.this
             );
-            builder.setMessage("Click OK for the details");
+            builder.setMessage(intentResult.getContents());
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+////                    dialogInterface.dismiss();
                     Intent intent = new Intent(HomeActivity.this,TicketDetailsActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("phone","+91"+phone);
+                    final String scanresult = intentResult.getContents();
+                    intent.putExtra("SCAN RESULT",scanresult);
                     startActivity(intent);
                 }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
             });
-            builder.show();
+          builder.show();
         }else {
             Toast.makeText(getApplicationContext(), "OOPS... You did not scan anything",Toast.LENGTH_SHORT).show();
         }

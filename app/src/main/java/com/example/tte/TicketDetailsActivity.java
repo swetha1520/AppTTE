@@ -1,6 +1,7 @@
 package com.example.tte;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,68 +26,42 @@ public class TicketDetailsActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
     FirebaseDatabase db;
-    DatabaseReference root,ticketid;
-    private String phone=getIntent().getExtras().getString("phone");
+    DatabaseReference root;
+    String qr = getIntent().getStringExtra("scanresult");
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler);
-        rv=(RecyclerView)findViewById(R.id.recycler);
+        rv = (RecyclerView) findViewById(R.id.recyclerview);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        list=new ArrayList<>();
+        list = new ArrayList<>();
 
-        root=db.getInstance().getReference().child("users").child(phone).child("current");
-        ticketid = db.getReference().child("tickets").child(user.getUid());
-        root.addValueEventListener(new ValueEventListener() {
+        root = db.getInstance().getReference().child("tickets").child(qr);
+        root.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren())
-                {
-                    String val = ds.getValue().toString();
-                    if(val.equals(ticketid))
-                    {
-                        ticketid.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for(DataSnapshot snapshot1 : snapshot.getChildren())
-                                {
-                                    Tickets l=snapshot1.getValue(Tickets.class);
-                                    list.add(l);
-                                }
-//                                Tickets tickets = snapshot.getValue(Tickets.class);
-//                                tickets.getTrain_name();
-//                                tickets.getTrain_no();
-//                                tickets.getPassengers();
-//                                tickets.getAge();
-//                                tickets.getGender();
-//                                tickets.getDate();
-//                                tickets.getTimings();
-//                                tickets.getSeats();
-//                                tickets.getPrice();
-
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    String pnr = dataSnapshot.getValue().toString();
+                    if (dataSnapshot.exists()) {
+                        Tickets l = dataSnapshot.getValue(Tickets.class);
+                        list.add(l);
                     }
+
+                    adapter=new MyAdapter(list);
+                    rv.setAdapter(adapter);
                 }
-                adapter=new MyAdapter(list);
-                rv.setAdapter(adapter);
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(TicketDetailsActivity.this,"Invalid",Toast.LENGTH_SHORT).show();
             }
         });
-    }
-}
+      }
+   }
+
+
+
+
