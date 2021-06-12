@@ -13,10 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MobileActivity extends AppCompatActivity {
     private EditText phoneNumber;
     private Button sendOTP;
-//    private FirebaseAuth auth;
-//    private FirebaseDatabase db = FirebaseDatabase.getInstance();
-//    private DatabaseReference root = db.getReference().child("users");
-//    private ArrayList<String> Userlist;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,36 +50,7 @@ public class MobileActivity extends AppCompatActivity {
                 Intent intent = new Intent(MobileActivity.this,VerificationActivity.class);
                 intent.putExtra("phone","+91"+phone);
                 startActivity(intent);
-//                root.child(phone).addListenerForSingleValueEvent(new ValueEventListener() {
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                        Userlist = new ArrayList<String>();
-//                        // Result will be holded Here
-//                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-//                            Userlist.add(String.valueOf(dsp.getValue())); //add result into array list
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error){
-//                }
-//
-//
-//                });
-//                //if database contains number then
-//                if(Userlist.contains(phone))
-//                {
-//                    startActivity(intent);//check whether tp pass more arguments
-//                }
-//                else
-//                {
-//
-//                    Toast.makeText(MobileActivity.this,"login failed",Toast.LENGTH_SHORT).show();
-////                    startActivity(intent);
-//                }
-//                //else return invalid user
-           }
+            }
         });
     }
 

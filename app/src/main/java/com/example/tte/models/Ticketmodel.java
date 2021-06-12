@@ -1,9 +1,8 @@
-package com.example.tte;
-
+package com.example.tte.models;
 
 import java.util.List;
 
-public class Tickets {
+public class Ticketmodel {
     private List<String> passengers;
     private List<String> age;
     private String train_no;
@@ -13,7 +12,6 @@ public class Tickets {
     private String date;
     private List<String> seats;
     private List<String> gender;
-
 
     public List<String> getGender() {
         return gender;
@@ -86,8 +84,6 @@ public class Tickets {
         this.seats = seats;
     }
 
-    public Tickets() {
+    public Ticketmodel() {
     }
-
-
 }

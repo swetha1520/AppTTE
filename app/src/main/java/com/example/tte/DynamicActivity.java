@@ -1,5 +1,6 @@
 package com.example.tte;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -8,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 public class DynamicActivity extends AppCompatActivity {
-    CardView card[];
+    CardView[] card;
     int i=0;
     TextView textview;
     @Override
@@ -30,9 +31,9 @@ public class DynamicActivity extends AppCompatActivity {
             i++;
             if(i<6)
             {
-                card[i].setVisibility(view.VISIBLE);
+                card[i].setVisibility(View.VISIBLE);
                 int temp=i+1;
-                String s=String.format("Passenger Count: %d",temp);
+                String s = String.format("Passenger Count: %d",temp);
                 textview.setText(s);
 
             }

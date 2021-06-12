@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <TextView
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/title"
             android:text="PASSENGER DETAILS"
-            android:textSize="36dp"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="#000000"
             android:layout_marginLeft="22dp"/>
